@@ -1,0 +1,60 @@
+#https://github.com/Resoxape/game.git
+
+screen = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+def gamescreen(screen):
+    print ('\n')
+    print ('______________')
+    for i in range (3):
+        print ( '|', screen[0+i*3], '|', screen[1+i*3], '|', screen[2+i*3], '|')
+        print ('______________')
+
+
+def hod(team):
+    f = False
+    while not f:
+        choise = (input('Куда ходим?'))
+        while not choise.isdigit():
+            choise = (input('Нужжно ввести цифру от 1 до 9 включительно!' ))
+        choise = int(choise)
+        if choise >=1 and choise <=9:
+            if str(screen[choise-1]) not in 'XO':
+                screen[choise-1] = team
+                f = True
+            else:
+                print('Ход невозможен, клетка занята')
+
+
+def victory(screen):
+    win_conditions = ((0,1,2),(3,4,5),(6,7,8),(0,3,6),(1,4,7),(2,5,8),(0,4,8),(2,4,6))
+    for i in win_conditions:
+        if screen[i[0]] == screen[i[1]] == screen[i[2]]:
+            return True
+        return False
+
+def nadoelo(screen):
+    a = 0
+    win = False
+    while not win:
+        gamescreen(screen)
+        if a%2==0:
+            hod('X')
+            team = 'Игрок Х'
+        else:
+            hod('Y')
+            team = 'Игрок Y'
+        a+=1
+        victory(screen)
+        if victory(screen):
+            print (team, 'Победил!')
+            win = True
+            gamescreen(screen)
+            break
+        if a == 9:
+            print ('Ничья, бывает!')
+            break
+        gamescreen(screen)
+
+nadoelo(screen)
+
+
